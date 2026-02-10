@@ -1,0 +1,133 @@
+body {
+    background: #222;
+    font-family: "Comfortaa", sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+.main-content {
+    text-align: center;
+    margin-top: 5vh;
+}
+
+/* Base Map Container */
+.map-base {
+    width: 306px;
+    height: 600px;
+    margin: auto;
+    background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/9.png") center center / cover;
+    position: relative;
+    display: inline-block;
+}
+
+/* Links inside the map */
+.map-navigation {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease 2.5s;
+}
+
+.map-base.active .map-navigation {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.map-link {
+    color: #615349;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Satisfy', cursive;
+    font-size: 1.2rem;
+}
+
+.map-link:hover { text-decoration: underline; }
+
+/* Canvas for cursor footsteps */
+#footprintCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    pointer-events: none;
+}
+
+/* 3D Flap & Side Logic */
+.map-flap, .map-side {
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: 0.5s ease;
+}
+
+.map-flap {
+    width: 100%;
+    height: 25%;
+    left: 0;
+    top: 25%;
+}
+
+.map-flap__front, .map-flap__back {
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.map-flap__back { transform: scale(-1) rotateY(180deg); }
+
+.flap--1 .map-flap__front { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-1.png") center left / cover; }
+.flap--1 .map-flap__back { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-3.png") -3px 0 / cover; }
+.flap--2 { top: 50%; }
+.flap--2 .map-flap__front { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-2.png") center left / cover; }
+.flap--2 .map-flap__back { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-4.png") -3px 0 / cover; }
+
+.map-side { height: 600px; width: 152px; top: 0; }
+.map-side .front, .map-side .back {
+    width: 100%; height: 100%; position: absolute;
+    background-size: cover; backface-visibility: hidden;
+}
+.map-side .back { background-image: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/back.png"); }
+
+.side-1 { left: 0; margin-left: 1.5px; }
+.side-2 { left: 50%; margin-left: -2px; }
+.side-3 { left: 0; margin-left: 3px; }
+.side-3 .back { transform: rotateY(180deg); }
+.side-4 { left: 50%; margin-left: -1px; }
+.side-4 .back { transform: rotateY(180deg); }
+.side-5 { left: 0; }
+.side-5 .back { background-image: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/1.png"); }
+.side-6 { left: 50%; }
+.side-6 .back { background-image: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/17.png"); }
+
+/* Active (Open) States */
+.map-base.active .side-1 { transform: rotateY(180deg) skewY(2deg); transform-origin: center left; transition-delay: 0.6s; }
+.map-base.active .side-2 { transform: rotateY(180deg) skewY(-2deg); transform-origin: center right; transition-delay: 0.6s; }
+.map-base.active .flap--1 { transform: rotateX(180deg); transform-origin: top center; transition-delay: 1.5s; }
+.map-base.active .flap--2 { transform: rotateX(180deg); transform-origin: bottom center; transition-delay: 1.8s; }
+
+/* Footstep styling (simplified) */
+.footstep {
+    position: absolute;
+    background: #615349;
+    width: 6px;
+    height: 12px;
+    border-radius: 80% 80% 70% 70%/130% 130% 25% 25%;
+    opacity: 0;
+}
+
+.map-base.active .footstep { opacity: 1; transition: 0.5s opacity 2.5s; }
+
+/* Toggle Button */
+.instructions { text-align: center; margin-top: 20px; }
+.toggle-map {
+    background: none; color: white; border: 2px solid white;
+    padding: 10px 20px; cursor: pointer; font-size: 1.5rem;
+}
