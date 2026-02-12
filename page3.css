@@ -1,0 +1,144 @@
+/* Inherits base variables from style.css */
+:root {
+    --sand-light: #e6dcc3;
+    --sand-dark: #c2b280;
+    --ink: #222;
+}
+
+body {
+    background-color: #111;
+}
+
+/* --- TEXT COLUMN --- */
+.text-column {
+    background-image: url("https://www.transparenttextures.com/patterns/noise.png");
+    background-color: #fcfbf9;
+    position: relative;
+    border-right: 1px solid #ccc;
+}
+
+.highlight-sand {
+    background: transparent;
+    color: #bfa575; /* Sand color */
+    font-weight: bold;
+    font-family: "Satisfy", cursive;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+
+/* The Impossible Page Numbers */
+.infinite-page-break {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Page numbers on the right */
+    border-bottom: 1px dashed #ccc;
+    margin: 30px 0;
+    position: relative;
+}
+
+.dynamic-page-num {
+    font-family: "Crimson Text", serif;
+    font-style: italic;
+    color: #888;
+    margin-right: 10px;
+    transition: opacity 0.3s;
+}
+
+/* --- THE SAND MAP --- */
+.map-column {
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+    cursor: none; /* Hide default cursor, we might add a custom one or just footprints */
+}
+
+/* Faint background of library shelves fading into darkness */
+.library-shelves-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(30, 30, 30, 0.5) 0px,
+        rgba(30, 30, 30, 0.5) 10px,
+        transparent 10px,
+        transparent 60px
+    );
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Texture overlay */
+.sand-texture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/stardust.png"); 
+    opacity: 0.3;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* --- DISINTEGRATING FOOTPRINTS --- */
+.sand-footprint {
+    position: absolute;
+    width: 12px;
+    height: 22px;
+    background: #e6dcc3; /* Light sand color */
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 5;
+    box-shadow: 0 0 5px rgba(230, 220, 195, 0.5);
+    /* Animation: Fade out and 'crumble' */
+    animation: crumble 2.5s forwards;
+}
+
+.sand-footprint::before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
+    top: -8px;
+    left: 3px;
+    background: #e6dcc3;
+}
+
+@keyframes crumble {
+    0% { opacity: 1; transform: scale(1); filter: blur(0px); }
+    50% { opacity: 0.8; transform: scale(1.1); filter: blur(1px); }
+    100% { 
+        opacity: 0; 
+        transform: scale(1.5) translateY(10px); /* Drift down */
+        filter: blur(4px); /* Dissolve into sand */
+    }
+}
+
+/* Tiny particles that fall from the footprints */
+.sand-grain {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #c2b280;
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall 1s linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(20px); opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .map-column {
+        display: none; /* Hide map on mobile for this specific page to focus on text */
+    }
+    .text-column {
+        width: 100%;
+    }
+}

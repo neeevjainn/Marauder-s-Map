@@ -1,0 +1,129 @@
+/* Inherits base variables from style.css */
+:root {
+    --ash: #2a2a2a;
+    --fire: #b22222;
+    --embers: #ff4500;
+}
+
+body {
+    background-color: #1a1a1a; /* Darker theme for the dungeon/night */
+}
+
+.text-column {
+    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+    background-color: #dcd0c0; /* Slightly darker paper */
+}
+
+.highlight {
+    font-weight: bold;
+    border-bottom: 1px dotted var(--ash);
+}
+
+.fire-text {
+    color: var(--fire);
+    font-family: "Satisfy", cursive;
+}
+
+/* --- THE CIRCULAR MAP --- */
+.map-column {
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 2s ease;
+}
+
+.circular-ruins-container {
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
+#ruins-svg {
+    width: 100%;
+    height: 100%;
+    animation: rotateMap 60s linear infinite;
+}
+
+@keyframes rotateMap {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Temple Rings Style */
+.ring {
+    fill: none;
+    stroke: #5c4d3c;
+    stroke-width: 2;
+    stroke-dasharray: 10, 5; /* Broken lines for ruins */
+    opacity: 0.6;
+}
+
+.ring-center {
+    fill: rgba(74, 59, 50, 0.2);
+    stroke: var(--fire);
+    stroke-width: 1;
+}
+
+/* Footprints for Page 2 */
+.spiral-print {
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    background: #8b735b;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    animation: appearPrint 0.5s forwards;
+}
+
+@keyframes appearPrint {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 0.7; transform: scale(1); }
+}
+
+/* --- THE FIRE ENDING --- */
+.fire-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(178, 34, 34, 0.2) 60%, rgba(178, 34, 34, 0.8) 100%);
+    transition: height 3s ease-in-out;
+    pointer-events: none;
+    z-index: 20;
+    mix-blend-mode: multiply;
+}
+
+/* Active Fire State (Triggered by JS) */
+.map-column.burning {
+    background-color: #2c0a0a;
+}
+
+.map-column.burning .ring {
+    stroke: #ff4500;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 5px #ff4500);
+    transition: all 2s;
+}
+
+.map-column.burning .fire-overlay {
+    height: 100%;
+}
+
+.map-column.burning .spiral-print {
+    opacity: 0;
+    transition: opacity 2s ease; /* They fade away as they are "illusions" */
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .circular-ruins-container {
+        width: 300px;
+        height: 300px;
+    }
+}
