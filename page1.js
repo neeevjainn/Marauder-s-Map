@@ -1,7 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. SCROLL REVEAL TEXT ANIMATION ---
-    const paragraphs = document.querySelectorAll('.story-content p');
+
+    // --- 1. NAV TOGGLE ---
+    const navContainer = document.querySelector('.nav-container');
+    const mainBtn = document.getElementById('main-nav-btn');
+
+    mainBtn.addEventListener('click', () => {
+        navContainer.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target)) {
+            navContainer.classList.remove('active');
+        }
+    });
+
+    // --- 2. REVEAL ANIMATION ---
+    const textBlocks = document.querySelectorAll('.text-block');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -9,91 +22,97 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('revealed');
             }
         });
-    }, {
-        threshold: 0.1,
-        root: document.getElementById('scroll-container')
-    });
+    }, { threshold: 0.15 });
 
-    paragraphs.forEach(p => observer.observe(p));
+    textBlocks.forEach(block => observer.observe(block));
 
-
-    // --- 2. MAP PATH LOGIC ---
-    const scrollContainer = document.getElementById('scroll-container');
+    // --- 3. FORKING PATHS LOGIC ---
+    const body = document.body;
+    const html = document.documentElement;
     const path = document.getElementById('walk-path');
     const footprintContainer = document.getElementById('footprint-container');
-    
-    // Total length of the SVG path
-    const pathLength = path.getTotalLength();
-    
-    // State to manage footprints
-    let isLeftFoot = true;
-    let lastScrollY = 0;
-    let accumulatedDistance = 0;
-    const stepDistance = 40; // Pixels of path distance between footprints
+    const bgLayer = document.querySelector('.garden-layer');
 
-    // Function to calculate position on path based on scroll %
-    function updateMap() {
-        // Calculate how far down the text we are (0 to 1)
-        // We subtract clientHeight so 100% is reached when we hit the bottom
-        const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-        const scrollPercentage = scrollContainer.scrollTop / maxScroll;
+    function getDocHeight() {
+        return Math.max( body.scrollHeight, body.offsetHeight, 
+                         html.clientHeight, html.scrollHeight, html.offsetHeight );
+    }
 
-        // Map scroll % to path length
-        // We cap it at 0.98 to avoid going off the very edge
-        const currentPathDistance = Math.min(scrollPercentage * pathLength, pathLength * 0.98);
-
-        // --- SPAWN FOOTPRINTS ---
-        // We only want to add footprints if we've moved forward enough
-        if (currentPathDistance > accumulatedDistance + stepDistance) {
+    function resizeMap() {
+        const docHeight = getDocHeight();
+        bgLayer.style.height = `${docHeight}px`;
+        
+        // A "Forking" Path Logic: A complex Sine wave that looks like it's winding
+        // through a garden, occasionally turning sharply
+        let d = "M150,0 ";
+        const waveHeight = 250;
+        const steps = Math.ceil(docHeight / waveHeight);
+        
+        for(let i=0; i<steps; i++) {
+            let yStart = i * waveHeight;
+            let yEnd = (i+1) * waveHeight;
             
-            // Loop to fill in gaps if user scrolls fast
+            // Randomize curve direction to feel organic
+            const curve = (i % 3 === 0) ? 50 : (i % 3 === 1) ? 250 : 150;
+            
+            d += `C ${curve},${yStart + 100} ${curve},${yEnd - 50} 150,${yEnd} `;
+        }
+        path.setAttribute('d', d);
+    }
+
+    // Initialize
+    setTimeout(resizeMap, 100);
+
+    // Footprints
+    let pathLength = 0;
+    let accumulatedDistance = 0;
+    let isLeftFoot = true;
+    const stepDistance = 55; 
+
+    function updateFootprints() {
+        pathLength = path.getTotalLength();
+        const scrollY = window.scrollY; 
+        const docHeight = getDocHeight();
+        const windowHeight = window.innerHeight;
+
+        // Progress based calculation
+        const progress = (scrollY + windowHeight * 0.5) / docHeight;
+        const currentPathDistance = progress * pathLength;
+
+        if (currentPathDistance > accumulatedDistance + stepDistance) {
             while (currentPathDistance > accumulatedDistance + stepDistance) {
                 accumulatedDistance += stepDistance;
                 placeFootprint(accumulatedDistance);
             }
         }
-        // Optional: Remove footprints if scrolling back up? 
-        // For a "memory" map, usually footprints stay, but let's clear them 
-        // if the user goes way back up to keep the UI clean.
-        else if (currentPathDistance < accumulatedDistance - 100) {
-            footprintContainer.innerHTML = '';
-            accumulatedDistance = 0;
-        }
     }
 
     function placeFootprint(distance) {
-        // Get coordinates at specific distance along path
+        if(!pathLength) return;
+
         const point = path.getPointAtLength(distance);
-        
-        // Get coordinates slightly ahead to determine rotation angle
         const nextPoint = path.getPointAtLength(distance + 5);
-        
-        // Calculate angle
         const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
 
-        // Create Element
         const footprint = document.createElement('div');
         footprint.classList.add('static-footprint');
         
-        // Offset for left/right foot logic
-        const offsetAmount = 8;
+        const offsetAmount = 10;
         const rad = angle * (Math.PI / 180);
-        // Calculate perpendicular offset
         const offsetX = Math.cos(rad + Math.PI/2) * (isLeftFoot ? -offsetAmount : offsetAmount);
         const offsetY = Math.sin(rad + Math.PI/2) * (isLeftFoot ? -offsetAmount : offsetAmount);
 
         footprint.style.left = `${point.x + offsetX}px`;
         footprint.style.top = `${point.y + offsetY}px`;
-        
-        // Rotate (add 90deg because css footprint points up)
         footprint.style.transform = `rotate(${angle + 90}deg)`;
 
         footprintContainer.appendChild(footprint);
-        
-        // Toggle foot
         isLeftFoot = !isLeftFoot;
     }
 
-    // Attach scroll listener
-    scrollContainer.addEventListener('scroll', updateMap);
+    window.addEventListener('scroll', updateFootprints);
+    window.addEventListener('resize', () => {
+        resizeMap();
+        pathLength = path.getTotalLength();
+    });
 });

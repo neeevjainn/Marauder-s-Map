@@ -1,101 +1,122 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. INFINITE PAGINATION LOGIC ---
-    const pageNums = document.querySelectorAll('.dynamic-page-num');
-    const scrollContainer = document.getElementById('scroll-container');
+    // --- 1. NAV TOGGLE ---
+    const navContainer = document.querySelector('.nav-container');
+    const mainBtn = document.getElementById('main-nav-btn');
 
-    // List of "impossible" page numbers from the story + random ones
-    const randomPages = ["999", "40,514", "88", "1,000", "Unknown", "∞", "1", "19", "2,001", "End?"];
-
-    scrollContainer.addEventListener('scroll', () => {
-        // Randomly scramble page numbers as user scrolls to simulate the shifting book
-        if (Math.random() > 0.8) { // Only do it sometimes to avoid chaos
-            const randomTarget = pageNums[Math.floor(Math.random() * pageNums.length)];
-            const randomVal = randomPages[Math.floor(Math.random() * randomPages.length)];
-            
-            // Simple fade out/in effect
-            randomTarget.style.opacity = 0;
-            setTimeout(() => {
-                randomTarget.innerText = randomVal;
-                randomTarget.style.opacity = 1;
-            }, 300);
+    mainBtn.addEventListener('click', () => {
+        navContainer.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+        if (!navContainer.contains(e.target)) {
+            navContainer.classList.remove('active');
         }
     });
 
+    // --- 2. REVEAL ANIMATION ---
+    // We observe both text blocks AND the center page markers
+    const revealElements = document.querySelectorAll('.text-block, .page-marker');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                // If it's a page marker, increase opacity
+                if(entry.target.classList.contains('page-marker')){
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'scale(1.1)';
+                }
+            }
+        });
+    }, { threshold: 0.15 });
 
-    // --- 2. SAND FOOTPRINT LOGIC ---
-    const mapCol = document.getElementById('sand-map');
-    const footprintContainer = document.getElementById('sand-footprints');
+    revealElements.forEach(el => observer.observe(el));
 
+    // --- 3. INFINITE PATH LOGIC ---
+    const body = document.body;
+    const html = document.documentElement;
+    const path = document.getElementById('walk-path');
+    const footprintContainer = document.getElementById('footprint-container');
+    const bgLayer = document.querySelector('.sand-layer');
+
+    function getDocHeight() {
+        return Math.max( body.scrollHeight, body.offsetHeight, 
+                         html.clientHeight, html.scrollHeight, html.offsetHeight );
+    }
+
+    function resizeMap() {
+        const docHeight = getDocHeight();
+        bgLayer.style.height = `${docHeight}px`;
+        
+        // A "Shifting" Path: Irregular waves to simulate sand dunes
+        let d = "M150,0 ";
+        const waveHeight = 200;
+        const steps = Math.ceil(docHeight / waveHeight);
+        
+        for(let i=0; i<steps; i++) {
+            let yStart = i * waveHeight;
+            let yEnd = (i+1) * waveHeight;
+            
+            // Randomize the "drift" slightly to look organic
+            const drift = (i % 2 === 0) ? 120 : 180;
+            
+            d += `C ${drift},${yStart + 100} ${drift},${yEnd - 50} 150,${yEnd} `;
+        }
+        path.setAttribute('d', d);
+    }
+
+    setTimeout(resizeMap, 100);
+
+    // Footprints
+    let pathLength = 0;
+    let accumulatedDistance = 0;
     let isLeftFoot = true;
-    let lastX = 0;
-    let lastY = 0;
-    const stepDistance = 50;
+    const stepDistance = 55; 
 
-    // On this page, footprints follow the mouse inside the map container
-    // symbolizing the user getting lost in the library
-    mapCol.addEventListener('mousemove', (e) => {
-        const rect = mapCol.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    function updateFootprints() {
+        pathLength = path.getTotalLength();
+        const scrollY = window.scrollY; 
+        const docHeight = getDocHeight();
+        const windowHeight = window.innerHeight;
 
-        const dist = Math.hypot(x - lastX, y - lastY);
+        // Footprints appear slightly ahead of scroll center
+        const progress = (scrollY + windowHeight * 0.5) / docHeight;
+        const currentPathDistance = progress * pathLength;
 
-        if (dist > stepDistance) {
-            createSandFootprint(x, y, lastX, lastY);
-            lastX = x;
-            lastY = y;
+        if (currentPathDistance > accumulatedDistance + stepDistance) {
+            while (currentPathDistance > accumulatedDistance + stepDistance) {
+                accumulatedDistance += stepDistance;
+                placeFootprint(accumulatedDistance);
+            }
         }
-    });
+    }
 
-    function createSandFootprint(x, y, prevX, prevY) {
-        // Calculate angle
-        const angle = Math.atan2(y - prevY, x - prevX) * 180 / Math.PI;
+    function placeFootprint(distance) {
+        if(!pathLength) return;
 
-        const print = document.createElement('div');
-        print.classList.add('sand-footprint');
+        const point = path.getPointAtLength(distance);
+        const nextPoint = path.getPointAtLength(distance + 5);
+        const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * 180 / Math.PI;
 
-        // Offset for feet
-        const offset = 10;
+        const footprint = document.createElement('div');
+        footprint.classList.add('static-footprint');
+        
+        const offsetAmount = 9;
         const rad = angle * (Math.PI / 180);
-        const offsetX = Math.cos(rad + Math.PI/2) * (isLeftFoot ? -offset : offset);
-        const offsetY = Math.sin(rad + Math.PI/2) * (isLeftFoot ? -offset : offset);
+        const offsetX = Math.cos(rad + Math.PI/2) * (isLeftFoot ? -offsetAmount : offsetAmount);
+        const offsetY = Math.sin(rad + Math.PI/2) * (isLeftFoot ? -offsetAmount : offsetAmount);
 
-        print.style.left = `${x + offsetX}px`;
-        print.style.top = `${y + offsetY}px`;
-        // Rotate (print points down by default in CSS, so add 180 if needed, or 90. 
-        // Our CSS print is vertical. Movement angle 0 is right. 
-        // So we rotate angle + 90deg.)
-        print.style.transform = `rotate(${angle + 90}deg)`;
+        footprint.style.left = `${point.x + offsetX}px`;
+        footprint.style.top = `${point.y + offsetY}px`;
+        footprint.style.transform = `rotate(${angle + 90}deg)`;
 
-        footprintContainer.appendChild(print);
-
-        // Create dissolving particles ("Sand")
-        createSandParticles(x + offsetX, y + offsetY);
-
+        footprintContainer.appendChild(footprint);
         isLeftFoot = !isLeftFoot;
-
-        // Cleanup DOM
-        setTimeout(() => {
-            print.remove();
-        }, 2500);
     }
 
-    function createSandParticles(x, y) {
-        for(let i=0; i<5; i++) {
-            const grain = document.createElement('div');
-            grain.classList.add('sand-grain');
-            
-            // Random scatter
-            const rx = (Math.random() - 0.5) * 15;
-            const ry = (Math.random() - 0.5) * 15;
-            
-            grain.style.left = `${x + rx}px`;
-            grain.style.top = `${y + ry}px`;
-            
-            footprintContainer.appendChild(grain);
-
-            setTimeout(() => grain.remove(), 1000);
-        }
-    }
+    window.addEventListener('scroll', updateFootprints);
+    window.addEventListener('resize', () => {
+        resizeMap();
+        pathLength = path.getTotalLength();
+    });
 });

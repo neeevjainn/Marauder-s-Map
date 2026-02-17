@@ -1,144 +1,245 @@
-/* Inherits base variables from style.css */
 :root {
-    --sand-light: #e6dcc3;
-    --sand-dark: #c2b280;
-    --ink: #222;
+    --sand-gold: #C2B280;
+    --dark-ink: #2b2523;
+    --paper-white: #fdfbf7;
+    --shadow: rgba(43, 37, 35, 0.15);
 }
 
 body {
+    margin: 0;
     background-color: #111;
-}
-
-/* --- TEXT COLUMN --- */
-.text-column {
-    background-image: url("https://www.transparenttextures.com/patterns/noise.png");
-    background-color: #fcfbf9;
-    position: relative;
-    border-right: 1px solid #ccc;
-}
-
-.highlight-sand {
-    background: transparent;
-    color: #bfa575; /* Sand color */
-    font-weight: bold;
-    font-family: "Satisfy", cursive;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-}
-
-/* The Impossible Page Numbers */
-.infinite-page-break {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Page numbers on the right */
-    border-bottom: 1px dashed #ccc;
-    margin: 30px 0;
-    position: relative;
-}
-
-.dynamic-page-num {
     font-family: "Crimson Text", serif;
-    font-style: italic;
-    color: #888;
-    margin-right: 10px;
-    transition: opacity 0.3s;
+    color: var(--dark-ink);
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-/* --- THE SAND MAP --- */
-.map-column {
-    background-color: #000;
-    position: relative;
-    overflow: hidden;
-    cursor: none; /* Hide default cursor, we might add a custom one or just footprints */
-}
-
-/* Faint background of library shelves fading into darkness */
-.library-shelves-bg {
+/* --- LAYER 1: The Infinite Sand Background --- */
+.sand-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        90deg,
-        rgba(30, 30, 30, 0.5) 0px,
-        rgba(30, 30, 30, 0.5) 10px,
-        transparent 10px,
-        transparent 60px
-    );
-    opacity: 0.2;
+    /* Javascript sets height */
     z-index: 0;
+    background-color: #1a1a1a;
+    /* Subtle paper/sand texture */
+    background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+}
+
+.grain-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/noise-lines.png");
+    opacity: 0.1;
     pointer-events: none;
 }
 
-/* Texture overlay */
-.sand-texture {
+/* The Center Path Column */
+.map-center-column {
     position: absolute;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
     height: 100%;
-    background-image: url("https://www.transparenttextures.com/patterns/stardust.png"); 
-    opacity: 0.3;
-    z-index: 10;
-    pointer-events: none;
+    /* Faint borders to represent the infinite book spine */
+    border-left: 1px dashed rgba(194, 178, 128, 0.2);
+    border-right: 1px dashed rgba(194, 178, 128, 0.2);
 }
 
-/* --- DISINTEGRATING FOOTPRINTS --- */
-.sand-footprint {
+.path-svg {
+    width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0;
+}
+
+/* Sand Footprints */
+.static-footprint {
     position: absolute;
-    width: 12px;
-    height: 22px;
-    background: #e6dcc3; /* Light sand color */
+    width: 12px; height: 22px;
+    background: var(--sand-gold); /* Gold footprints on dark bg */
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    z-index: 5;
-    box-shadow: 0 0 5px rgba(230, 220, 195, 0.5);
-    /* Animation: Fade out and 'crumble' */
-    animation: crumble 2.5s forwards;
+    opacity: 0;
+    z-index: 1;
+    animation: printAppear 0.8s forwards;
+    box-shadow: 0 0 5px rgba(194, 178, 128, 0.3);
+}
+.static-footprint::before {
+    content: ""; position: absolute;
+    border-radius: 50%; width: 4px; height: 4px;
+    top: 110%; left: 4px; background: inherit;
 }
 
-.sand-footprint::before {
-    content: "";
-    position: absolute;
+@keyframes printAppear {
+    from { opacity: 0; transform: scale(0.6); }
+    to { opacity: 0.6; transform: scale(1); }
+}
+
+/* --- LAYER 2: Story Grid --- */
+.story-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 320px 1fr;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+}
+
+/* Header */
+.story-header.full-width {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 120px 0 80px;
+}
+
+.story-header h1 {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 5rem;
+    color: var(--sand-gold);
+    margin: 0;
+}
+
+.dedication {
+    font-family: "Crimson Text", serif;
+    font-style: italic;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+/* Page Markers (The numbers in the middle) */
+.page-marker {
+    grid-column: 2; /* Sits in center path */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    opacity: 0.4;
+    transition: 0.5s;
+}
+
+.page-marker span {
+    font-family: "Crimson Text", serif;
+    font-size: 1.5rem;
+    color: var(--sand-gold);
+    border: 1px solid var(--sand-gold);
+    padding: 5px 15px;
     border-radius: 50%;
-    width: 5px;
-    height: 5px;
-    top: -8px;
-    left: 3px;
-    background: #e6dcc3;
+    background: #111;
 }
 
-@keyframes crumble {
-    0% { opacity: 1; transform: scale(1); filter: blur(0px); }
-    50% { opacity: 0.8; transform: scale(1.1); filter: blur(1px); }
-    100% { 
-        opacity: 0; 
-        transform: scale(1.5) translateY(10px); /* Drift down */
-        filter: blur(4px); /* Dissolve into sand */
-    }
+/* Text Blocks */
+.text-block {
+    background: var(--paper-white);
+    padding: 30px 40px;
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-top: 1px solid var(--sand-gold);
+    
+    opacity: 0; 
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
 }
 
-/* Tiny particles that fall from the footprints */
-.sand-grain {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #c2b280;
-    position: absolute;
-    border-radius: 50%;
+/* Infinite Paper Stack Effect */
+.text-block::after {
+    content: ""; position: absolute;
+    bottom: -5px; left: 5px; right: 5px; height: 100%;
+    background: white; z-index: -1;
+    border: 1px solid #ccc; transform: rotate(-1deg);
+}
+
+.text-block p {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.sand-text {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.6rem;
+    color: #8B4513; /* SaddleBrown for emphasis */
+}
+
+/* Positioning Logic */
+.text-block:nth-of-type(odd) {
+    grid-column: 1;
+    transform: translateX(-30px);
+}
+
+.text-block:nth-of-type(even) {
+    grid-column: 3;
+    transform: translateX(30px);
+    margin-top: 60px; 
+}
+
+.text-block.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- NAVIGATION MENU (Gold Theme) --- */
+.nav-container {
+    position: fixed;
+    bottom: 40px; right: 40px;
+    z-index: 100;
+}
+
+.nav-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%; border: none;
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.main {
+    background: var(--sand-gold);
+    color: #000;
+    position: relative; z-index: 102;
+    font-size: 1.5rem;
+}
+.main:hover { transform: scale(1.1); background: #dcd0a0; }
+
+.nav-options {
+    position: absolute; bottom: 0; right: 0;
+    width: 60px; height: 60px;
     pointer-events: none;
-    animation: fall 1s linear forwards;
 }
 
-@keyframes fall {
-    to { transform: translateY(20px); opacity: 0; }
+.option {
+    position: absolute; top: 0; left: 0;
+    background: #111;
+    color: var(--sand-gold);
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.2rem;
+    border: 1px solid var(--sand-gold);
+    opacity: 0; z-index: 101; pointer-events: none;
 }
 
-/* Responsive */
+.tooltip {
+    position: absolute; right: 70px;
+    background: var(--sand-gold); color: #000;
+    padding: 4px 8px; font-size: 0.8rem;
+    border-radius: 2px; font-family: sans-serif;
+    opacity: 0; pointer-events: none;
+}
+.option:hover .tooltip { opacity: 1; }
+
+.nav-container.active .option { opacity: 1; pointer-events: auto; }
+.nav-container.active .option:nth-child(1) { transform: translateY(-80px); }
+.nav-container.active .option:nth-child(2) { transform: translate(-60px, -60px); }
+.nav-container.active .option:nth-child(3) { transform: translateX(-80px); }
+.nav-container.active .main { transform: rotate(45deg); }
+
+/* Mobile */
 @media (max-width: 768px) {
-    .map-column {
-        display: none; /* Hide map on mobile for this specific page to focus on text */
+    .story-grid { display: block; padding: 20px; }
+    .text-block:nth-of-type(odd), .text-block:nth-of-type(even) {
+        margin: 0 0 40px 0;
+        transform: translateY(20px);
     }
-    .text-column {
-        width: 100%;
-    }
+    .page-marker { height: 60px; margin-bottom: 20px;}
 }

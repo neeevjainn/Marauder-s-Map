@@ -6,93 +6,117 @@
     <title>The Circular Ruins</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="page2.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <a href="home.html" class="back-link">← Mischief Managed</a>
-
-    <div class="split-container">
+    <div class="ruins-layer">
+        <div class="map-center-column">
+            <svg preserveAspectRatio="none" class="path-svg">
+                <path id="walk-path" d="M150,0 C150,0 150,0 150,10000" 
+                      fill="none" stroke="transparent" />
+            </svg>
+            
+            <div id="footprint-container"></div>
+        </div>
         
-        <div class="text-column" id="scroll-container">
-            <header class="story-header">
-                <h1>The Circular Ruins</h1>
-                <p class="dedication">Jorge Luis Borges</p>
-            </header>
+        <div class="fire-overlay"></div>
+    </div>
 
-            <article class="story-content">
-                <p>No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South...</p>
-                <p>What is certain is that the grey man kissed the mud, climbed up the bank without feeling the blades which were lacerating his flesh, and crawled, nauseated and bloodstained, up to the <span class="highlight">circular enclosure</span> crowned with a stone tiger or horse...</p>
-                
-                <p>The purpose which guided him was not impossible, though supernatural. He wanted to <strong>dream a man</strong>; he wanted to dream him in minute entirety and impose him on reality.</p>
-                
-                <p>This uninhabited, ruined temple suited him, for it is contained a minimum of visible world...</p>
+    <main class="story-grid">
+        
+        <header class="story-header full-width">
+            <h1>The Circular Ruins</h1>
+            <p class="dedication">Jorge Luis Borges</p>
+        </header>
 
-                <p>The stranger dreamed that he was in the center of a circular amphitheater which was more or less the burnt temple; clouds of taciturn students filled the tiers of seats...</p>
-
-                <p>After nine or ten nights he understood with a certain bitterness that he could expect nothing from those pupils who accepted his doctrine passively...</p>
-                
-                <p>He understood that modeling the incoherent and vertiginous matter of which dreams are composed was the most difficult task that a man could undertake... much more difficult than weaving a rope out of sand or coining the faceless wind.</p>
-                
-                <p>He dreamed almost immediately, with his heart throbbing. He dreamed that it was warm, secret, about the size of a clenched fist, and of a garnet color within the penumbra of a human body as yet without face or sex...</p>
-                
-                <p>In the Gnostic cosmosgonies, demiurges fashion a red Adam who cannot stand; as a clumsy, crude and elemental as this Adam of dust was the Adam of dreams forged by the wizard's nights.</p>
-                
-                <p>That evening, at twilight, he dreamt of the statue. He dreamt it was alive, tremulous: it was not an atrocious bastard of a tiger and a colt, but at the same time these two firey creatures and also a bull, a rose, and a storm. This multiple god revealed to him that his earthly name was <span class="fire-text">Fire</span>.</p>
-
-                <p>The wizard carried out the orders he had been given. He devoted a certain length of time (which finally proved to be two years) to instructing him in the mysteries of the universe and the cult of fire.</p>
-                
-                <p>Gradually, he began accustoming him to reality. Once he ordered him to place a flag on a faraway peak. The next day the flag was fluttering on the peak.</p>
-                
-                <p>His victory and peace became blurred with boredom. In the twilight times of dusk and dawn, he would prostrate himself before the stone figure...</p>
-
-                <p>The wizard suddenly remembered the words of the god. He remembered that of all the creatures that people the earth, <span class="fire-text">Fire</span> was the only one who knew his son to be a phantom.</p>
-                
-                <p>First (after a long drought) a remote cloud, as light as a bird, appeared on a hill; then, toward the South, the sky took on the rose color of leopard's gums; then came clouds of smoke which rusted the metal of the nights.</p>
-                
-                <p class="climax">The ruins of the sanctuary of the god of Fire was destroyed by fire. In a dawn without birds, the wizard saw the concentric fire licking the walls. He walked toward the sheets of flame. They did not bite his flesh, they caressed him and flooded him without heat or combustion. With relief, with humiliation, with terror, he understood that he also was an illusion, that someone else was dreaming him.</p>
-
-                <br><br><br><br>
-            </article>
+        <div class="text-block">
+            <p>No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South...</p>
         </div>
 
-        <div class="map-column" id="map-col">
-            <div class="circular-ruins-container">
-                <svg id="ruins-svg" viewBox="0 0 500 500">
-                    <circle cx="250" cy="250" r="200" class="ring ring-outer" />
-                    <circle cx="250" cy="250" r="150" class="ring ring-mid" />
-                    <circle cx="250" cy="250" r="100" class="ring ring-inner" />
-                    <circle cx="250" cy="250" r="40" class="ring ring-center" />
-                    
-                    <path id="spiral-path" fill="none" stroke="none" 
-                          d="M250,50 
-                             A200,200 0 0,1 450,250 
-                             A200,200 0 0,1 250,450 
-                             A200,200 0 0,1 50,250 
-                             A200,200 0 0,1 250,50 
-                             
-                             M250,100
-                             A150,150 0 0,1 400,250
-                             A150,150 0 0,1 250,400
-                             A150,150 0 0,1 100,250
-                             A150,150 0 0,1 250,100
+        <div class="text-block">
+            <p>What is certain is that the grey man kissed the mud, climbed up the bank without feeling the blades which were lacerating his flesh, and crawled, nauseated and bloodstained, up to the <span class="highlight">circular enclosure</span> crowned with a stone tiger or horse.</p>
+        </div>
+        
+        <div class="divider full-width"></div>
 
-                             M250,150
-                             A100,100 0 0,1 350,250
-                             A100,100 0 0,1 250,350
-                             A100,100 0 0,1 150,250
-                             A100,100 0 0,1 250,150
-                             L250,250" />
-                </svg>
-                
-                <div id="spiral-footprints"></div>
-                
-                <div class="fire-overlay"></div>
-            </div>
+        <div class="text-block">
+            <p>The purpose which guided him was not impossible, though supernatural. He wanted to <strong class="script-emphasis">dream a man</strong>; he wanted to dream him in minute entirety and impose him on reality.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>This uninhabited, ruined temple suited him, for it is contained a minimum of visible world.</p>
         </div>
 
+        <div class="text-block">
+            <p>The stranger dreamed that he was in the center of a circular amphitheater which was more or less the burnt temple; clouds of taciturn students filled the tiers of seats.</p>
+        </div>
+
+        <div class="text-block">
+            <p>After nine or ten nights he understood with a certain bitterness that he could expect nothing from those pupils who accepted his doctrine passively.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>He understood that modeling the incoherent and vertiginous matter of which dreams are composed was the most difficult task that a man could undertake... much more difficult than weaving a rope out of sand or coining the faceless wind.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>He dreamed almost immediately, with his heart throbbing. He dreamed that it was warm, secret, about the size of a clenched fist, and of a garnet color within the penumbra of a human body as yet without face or sex.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>In the Gnostic cosmosgonies, demiurges fashion a red Adam who cannot stand; as a clumsy, crude and elemental as this Adam of dust was the Adam of dreams forged by the wizard's nights.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>That evening, at twilight, he dreamt of the statue. He dreamt it was alive, tremulous. This multiple god revealed to him that his earthly name was <span class="fire-text">Fire</span>.</p>
+        </div>
+
+        <div class="text-block">
+            <p>The wizard carried out the orders he had been given. He devoted a certain length of time (which finally proved to be two years) to instructing him in the mysteries of the universe and the cult of fire.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>Gradually, he began accustoming him to reality. Once he ordered him to place a flag on a faraway peak. The next day the flag was fluttering on the peak.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>His victory and peace became blurred with boredom. In the twilight times of dusk and dawn, he would prostrate himself before the stone figure.</p>
+        </div>
+
+        <div class="text-block">
+            <p>The wizard suddenly remembered the words of the god. He remembered that of all the creatures that people the earth, <span class="fire-text">Fire</span> was the only one who knew his son to be a phantom.</p>
+        </div>
+        
+        <div class="text-block">
+            <p>First (after a long drought) a remote cloud, as light as a bird, appeared on a hill; then, toward the South, the sky took on the rose color of leopard's gums; then came clouds of smoke which rusted the metal of the nights.</p>
+        </div>
+        
+        <div class="text-block">
+            <p class="climax">The ruins of the sanctuary of the god of Fire was destroyed by fire. In a dawn without birds, the wizard saw the concentric fire licking the walls. He walked toward the sheets of flame. They did not bite his flesh, they caressed him and flooded him without heat or combustion. With relief, with humiliation, with terror, he understood that he also was an illusion, that someone else was dreaming him.</p>
+        </div>
+
+    </main>
+
+    <div class="nav-container">
+        <button id="main-nav-btn" class="nav-btn main">
+            <span class="nav-icon">✦</span>
+        </button>
+        
+        <div class="nav-options">
+            <a href="page1.html" class="nav-btn option" style="--i:1;">
+                <span class="tooltip">Archive</span>I
+            </a>
+            <a href="page3.html" class="nav-btn option" style="--i:2;">
+                <span class="tooltip">Secrets</span>III
+            </a>
+            <a href="map.html" class="nav-btn option" style="--i:3;">
+                <span class="tooltip">Map</span>M
+            </a>
+        </div>
     </div>
 
     <script src="page2.js"></script>

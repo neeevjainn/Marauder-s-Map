@@ -1,191 +1,251 @@
-/* Inherit basic variables from main style.css if linked, redefining here for standalone safety */
 :root {
-    --brown: #4a3b32;
-    --paper: #f0e6d2;
-    --gold: #cda45e;
-    --redacted: #2c241b;
+    --garden-green: #1e2b20; /* Deep dark green */
+    --antique-gold: #c5a059;
+    --parchment: #f0e6d2;
+    --ink: #2b2523;
+    --shadow: rgba(0, 0, 0, 0.4);
 }
 
 body {
-    overflow: hidden; /* Prevent body scroll, we scroll the text column */
-    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-    background-color: #222;
-}
-
-.back-link {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-    color: var(--brown);
-    text-decoration: none;
-    font-family: "Satisfy", cursive;
-    font-size: 1.2rem;
-    border-bottom: 1px dashed var(--brown);
-    transition: 0.3s;
-}
-.back-link:hover {
-    color: var(--gold);
-    border-bottom-style: solid;
-}
-
-/* --- SPLIT LAYOUT --- */
-.split-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-}
-
-/* --- TEXT COLUMN --- */
-.text-column {
-    width: 55%;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 80px 60px 100px;
-    background: var(--paper);
-    background-image: url("https://www.transparenttextures.com/patterns/aged-paper.png");
-    color: var(--brown);
+    margin: 0;
+    background-color: #0f1610;
     font-family: "Crimson Text", serif;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    position: relative;
-    scrollbar-width: thin;
-    scrollbar-color: var(--brown) transparent;
+    color: var(--ink);
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-.story-header h1 {
-    font-family: "Satisfy", cursive;
-    font-size: 3rem;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.dedication {
-    text-align: center;
-    font-style: italic;
-    margin-bottom: 40px;
-    color: #666;
-}
-
-.divider {
-    border: 0;
-    height: 1px;
-    background: var(--brown);
-    margin: 30px auto;
-    width: 50%;
-    opacity: 0.5;
-}
-
-/* Text Effects */
-p {
-    margin-bottom: 25px;
-    opacity: 0.3; /* Start faded out */
-    transform: translateY(20px);
-    transition: all 0.8s ease-out;
-}
-
-p.revealed {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.highlight {
-    color: #990000; /* Deep red ink */
-    font-weight: bold;
-    font-style: italic;
-    background: rgba(255, 255, 0, 0.1);
-    padding: 0 4px;
-}
-
-.redacted {
-    background: var(--redacted);
-    color: var(--redacted);
-    padding: 0 4px;
-    cursor: help;
-    transition: 0.3s;
-    border-radius: 2px;
-}
-
-.redacted:hover {
-    background: transparent;
-    color: var(--redacted);
-    text-decoration: line-through;
-}
-
-/* --- MAP COLUMN --- */
-.map-column {
-    width: 45%;
-    height: 100%;
-    position: relative;
-    background: #e6dcc3;
-    background-image: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/9.png"); 
-    background-size: cover;
-    background-position: center;
-    border-left: 2px solid rgba(74, 59, 50, 0.3);
-    overflow: hidden;
-}
-
-.path-svg {
+/* --- LAYER 1: The Garden Background --- */
+.garden-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    /* Javascript sets height */
+    z-index: 0;
+    background-color: var(--garden-green);
+    /* Subtle leaf/organic texture */
+    background-image: url("https://www.transparenttextures.com/patterns/black-scales.png");
+    opacity: 0.9;
 }
 
-/* Static footprint style for the generated trail */
+/* Mist effect over the garden */
+.mist-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, #0f1610 90%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* The Center Path Column */
+.map-center-column {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 100%;
+    /* Faint path borders */
+    border-left: 1px dashed rgba(197, 160, 89, 0.1);
+    border-right: 1px dashed rgba(197, 160, 89, 0.1);
+}
+
+.path-svg {
+    width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0;
+}
+
+/* Footprints (Gold/Muddy) */
 .static-footprint {
     position: absolute;
-    width: 12px;
-    height: 20px;
-    background: var(--brown);
+    width: 12px; height: 22px;
+    background: #8b6b3e; /* Muddy Gold */
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity: 0;
-    z-index: 2;
-    animation: printAppear 0.5s forwards;
-    pointer-events: none;
+    z-index: 1;
+    animation: printAppear 0.8s forwards;
 }
-
 .static-footprint::before {
-    content: "";
-    position: absolute;
-    border-radius: 6px;
-    width: 6px;
-    height: 6px;
-    top: 110%;
-    left: 1px;
-    background: var(--brown);
+    content: ""; position: absolute;
+    border-radius: 50%; width: 4px; height: 4px;
+    top: 110%; left: 4px; background: inherit;
 }
 
 @keyframes printAppear {
-    from { opacity: 0; transform: scale(0.5); }
+    from { opacity: 0; transform: scale(0.6); }
     to { opacity: 0.8; transform: scale(1); }
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 768px) {
-    .split-container {
-        flex-direction: column-reverse; /* Put map on top or background */
-        display: block;
-    }
+/* --- LAYER 2: Story Grid --- */
+.story-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 320px 1fr;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+}
 
-    .map-column {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 15vw; /* Thin strip on the right */
-        height: 100vh;
-        z-index: 10;
-        border-left: 1px solid var(--brown);
-    }
+/* Header */
+.story-header.full-width {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 120px 0 80px;
+}
 
-    .text-column {
-        width: 100%;
-        padding-right: 18vw; /* Make room for the map strip */
-    }
+.story-header h1 {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 5rem;
+    color: var(--antique-gold);
+    margin: 0;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.dedication {
+    font-family: "Crimson Text", serif;
+    font-style: italic;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+/* Divider */
+.divider.full-width {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--antique-gold), transparent);
+    width: 60%;
+    margin: 60px auto;
+    opacity: 0.4;
+}
+
+/* Text Blocks */
+.text-block {
+    background: var(--parchment);
+    padding: 30px 40px;
+    border-radius: 2px;
+    /* Deep shadow to pop off the dark garden bg */
+    box-shadow: 0 10px 25px var(--shadow);
+    border: 1px solid rgba(0,0,0,0.1);
     
-    .path-svg {
-        opacity: 0.5;
+    opacity: 0; 
+    transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+}
+
+.text-block p {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Specific Styles for this story */
+.redacted {
+    background: #111;
+    color: #111;
+    padding: 0 4px;
+    cursor: help;
+    transition: 0.3s;
+}
+.redacted:hover {
+    background: transparent;
+    text-decoration: line-through;
+}
+
+.highlight {
+    color: #800000; /* Blood red highlight */
+    font-weight: bold;
+    font-style: italic;
+    background: rgba(255, 255, 0, 0.1);
+}
+
+/* Positioning Logic */
+.text-block:nth-child(odd) {
+    grid-column: 1;
+    text-align: right;
+    border-right: 3px solid var(--antique-gold);
+    transform: translateX(-30px);
+}
+
+.text-block:nth-child(even) {
+    grid-column: 3;
+    text-align: left;
+    border-left: 3px solid var(--antique-gold);
+    transform: translateX(30px);
+    margin-top: 100px; /* Stagger */
+}
+
+.text-block.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- NAVIGATION MENU (Green/Gold Theme) --- */
+.nav-container {
+    position: fixed;
+    bottom: 40px; right: 40px;
+    z-index: 100;
+}
+
+.nav-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%; border: none;
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.main {
+    background: var(--antique-gold);
+    color: #0f1610;
+    position: relative; z-index: 102;
+    font-size: 1.5rem;
+    border: 1px solid #fff;
+}
+.main:hover { transform: scale(1.1); background: #fff; }
+
+.nav-options {
+    position: absolute; bottom: 0; right: 0;
+    width: 60px; height: 60px;
+    pointer-events: none;
+}
+
+.option {
+    position: absolute; top: 0; left: 0;
+    background: #0f1610;
+    color: var(--antique-gold);
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.2rem;
+    border: 1px solid var(--antique-gold);
+    opacity: 0; z-index: 101; pointer-events: none;
+}
+
+.tooltip {
+    position: absolute; right: 70px;
+    background: var(--antique-gold); color: #000;
+    padding: 4px 8px; font-size: 0.8rem;
+    border-radius: 2px; font-family: sans-serif;
+    opacity: 0; pointer-events: none;
+}
+.option:hover .tooltip { opacity: 1; }
+
+.nav-container.active .option { opacity: 1; pointer-events: auto; }
+.nav-container.active .option:nth-child(1) { transform: translateY(-80px); }
+.nav-container.active .option:nth-child(2) { transform: translate(-60px, -60px); }
+.nav-container.active .option:nth-child(3) { transform: translateX(-80px); }
+.nav-container.active .main { transform: rotate(45deg); }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .story-grid { display: block; padding: 20px; }
+    .text-block:nth-child(odd), .text-block:nth-child(even) {
+        margin: 0 0 40px 0;
+        text-align: left;
+        border: none;
+        border-left: 3px solid var(--antique-gold);
+        transform: translateY(20px);
     }
 }

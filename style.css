@@ -1,76 +1,76 @@
 /* --- VARIABLES --- */
 :root {
-    --brown: #4a3b32; /* Darker ink color */
-    --paper: #f0e6d2; /* Parchment color */
-    --paper-texture: url("https://www.transparenttextures.com/patterns/aged-paper.png"); 
+--brown: #4a3b32; /* Darker ink color */
+--paper: #f0e6d2; /* Parchment color */
+--paper-texture: url("https://www.transparenttextures.com/patterns/aged-paper.png");
 }
 
 /* --- GLOBAL RESET & TYPOGRAPHY --- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+box-sizing: border-box;
+margin: 0;
+padding: 0;
 }
 
 body {
-    background-color: #222;
-    background-image: var(--paper-texture);
-    font-family: "Crimson Text", serif;
-    color: var(--brown);
-    overflow-x: hidden;
+background-color: #222;
+background-image: var(--paper-texture);
+font-family: "Crimson Text", serif;
+color: var(--brown);
+overflow-x: hidden;
 }
 
 /* --- INTRO PAGE STYLES --- */
 .intro-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #111;
-    color: #ddd;
-    text-align: center;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #111;
+color: #ddd;
+text-align: center;
 }
 
 .intro-container h1 {
-    font-family: "Satisfy", cursive;
-    font-size: 2.5rem;
-    color: #cda45e;
+font-family: "Satisfy", cursive;
+font-size: 2.5rem;
+color: #cda45e;
 }
 
 .intro-container input {
-    padding: 15px;
-    font-family: "Satisfy", cursive;
-    font-size: 1.2rem;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid #cda45e;
-    color: #fff;
-    text-align: center;
-    margin-top: 30px;
-    width: 80%;
+padding: 15px;
+font-family: "Satisfy", cursive;
+font-size: 1.2rem;
+background: transparent;
+border: none;
+border-bottom: 2px solid #cda45e;
+color: #fff;
+text-align: center;
+margin-top: 30px;
+width: 80%;
 }
 
 .intro-container input:focus {
-    outline: none;
-    border-bottom: 2px solid #fff;
+outline: none;
+border-bottom: 2px solid #fff;
 }
 
 .intro-container button {
-    display: block;
-    margin: 20px auto;
-    background: transparent;
-    border: 1px solid #cda45e;
-    color: #cda45e;
-    padding: 10px 20px;
-    font-family: "Crimson Text", serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
+display: block;
+margin: 20px auto;
+background: transparent;
+border: 1px solid #cda45e;
+color: #cda45e;
+padding: 10px 20px;
+font-family: "Crimson Text", serif;
+font-size: 1rem;
+cursor: pointer;
+transition: 0.3s;
 }
 
 .intro-container button:hover {
-    background: #cda45e;
-    color: #111;
+background: #cda45e;
+color: #111;
 }
 
 /* Animation Utilities */
@@ -83,85 +83,85 @@ body {
 
 /* --- MAP PAGE STYLES --- */
 .map-body {
-    background: #222; /* Fallback */
-    min-height: 100vh;
+background: #222; /* Fallback */
+min-height: 100vh;
 }
 
 .main-content {
-    text-align: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1500px;
-    overflow: hidden; /* Hide overflow during animation */
+text-align: center;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+perspective: 1500px;
+overflow: hidden; /* Hide overflow during animation */
 }
 
 /* --- THE MAP CORE (Adapted from Inspiration) --- */
 .map-base {
-    width: 306px;
-    height: 600px;
-    position: relative;
-    background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/9.png") center center / cover;
-    transform-style: preserve-3d;
-    transition: transform 0.5s;
+width: 306px;
+height: 600px;
+position: relative;
+background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/9.png") center center / cover;
+transform-style: preserve-3d;
+transition: transform 0.5s;
 }
 
 /* Responsive Scaling: Scale the whole map down on small screens */
 @media (max-width: 600px) {
-    .map-base {
-        transform: scale(0.6);
-    }
+.map-base {
+transform: scale(0.6);
+}
 }
 
 /* --- FLAPS & SIDES --- */
 .map-flap {
-    transform-style: preserve-3d;
-    position: absolute;
-    width: 100%;
-    height: 25%;
-    left: 0;
-    transition: 0.5s ease;
+transform-style: preserve-3d;
+position: absolute;
+width: 100%;
+height: 25%;
+left: 0;
+transition: 0.5s ease;
 }
 
 .map-flap__front, .map-flap__back {
-    backface-visibility: hidden;
-    width: 100%;
-    height: 100%;
-    position: absolute;
+backface-visibility: hidden;
+width: 100%;
+height: 100%;
+position: absolute;
 }
 .map-flap__back { transform: scale(-1) rotateY(180deg); }
 
 .flap--1 {
-    top: 25%;
-    z-index: 5;
+top: 25%;
+z-index: 5;
 }
 .flap--1 .map-flap__front { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-1.png") center left / cover; }
 .flap--1 .map-flap__back { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-3.png") -3px 0/ cover; }
 
 .flap--2 {
-    top: 50%;
-    z-index: 5;
+top: 50%;
+z-index: 5;
 }
 .flap--2 .map-flap__front { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-2.png") center left / cover; }
 .flap--2 .map-flap__back { background: url("https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/mini-4.png") -3px 0/ cover; }
 
 /* Side Panels */
 .map-side {
-    height: 600px;
-    width: 152px;
-    position: absolute;
-    transform-style: preserve-3d;
-    transition: 0.3s ease;
-    top: 0;
+height: 600px;
+width: 152px;
+position: absolute;
+transform-style: preserve-3d;
+transition: 0.3s ease;
+top: 0;
 }
 
 .map-side .front, .map-side .back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-size: cover;
-    backface-visibility: hidden;
+width: 100%;
+height: 100%;
+position: absolute;
+background-size: cover;
+backface-visibility: hidden;
 }
 
 .map-side .back { background-image: url(https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/back.png); }
@@ -203,29 +203,29 @@ body {
 
 /* --- LINKS / NAVIGATION --- */
 .map-link {
-    position: absolute;
-    text-decoration: none;
-    color: var(--brown);
-    font-family: "Satisfy", cursive;
-    font-size: 1.2rem;
-    padding: 10px;
-    border: 1px dashed var(--brown);
-    background: rgba(240, 230, 210, 0.7);
-    transition: 0.3s;
-    opacity: 0; /* Hidden until map opens */
-    pointer-events: none;
-    z-index: 100;
-    text-align: center;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+position: absolute;
+text-decoration: none;
+color: var(--brown);
+font-family: "Satisfy", cursive;
+font-size: 1.2rem;
+padding: 10px;
+border: 1px dashed var(--brown);
+background: rgba(240, 230, 210, 0.7);
+transition: 0.3s;
+opacity: 0; /* Hidden until map opens */
+pointer-events: none;
+z-index: 100;
+text-align: center;
+box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
 .map-link span { display: block; font-weight: bold; }
 .map-link small { font-family: "Crimson Text", serif; font-size: 0.9rem; }
 
 .map-link:hover {
-    background: var(--brown);
-    color: #fff;
-    border-style: solid;
+background: var(--brown);
+color: #fff;
+border-style: solid;
 }
 
 /* Positioning Links */
@@ -235,65 +235,65 @@ body {
 
 /* Reveal links only when map is active */
 .map-base.active .map-link {
-    opacity: 1;
-    pointer-events: auto;
-    transition: opacity 1s ease 2s; /* Delay appearance until map unfolds */
+opacity: 1;
+pointer-events: auto;
+transition: opacity 1s ease 2s; /* Delay appearance until map unfolds */
 }
 
 /* --- FOOTPRINTS & CURSOR --- */
 .cursor-follower {
-    position: fixed;
-    pointer-events: none; /* Let clicks pass through */
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    will-change: transform;
+position: fixed;
+pointer-events: none; /* Let clicks pass through */
+z-index: 9999;
+top: 0;
+left: 0;
+will-change: transform;
 }
 
 #cursor-name {
-    background: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/scroll.svg') center center / cover;
-    padding: 5px 20px;
-    font-family: "Satisfy", cursive;
-    color: var(--brown);
-    font-weight: bold;
-    font-size: 1.1rem;
-    white-space: nowrap;
-    position: absolute;
-    top: -40px;
-    left: 10px;
+background: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/scroll.svg') center center / cover;
+padding: 5px 20px;
+font-family: "Satisfy", cursive;
+color: var(--brown);
+font-weight: bold;
+font-size: 1.1rem;
+white-space: nowrap;
+position: absolute;
+top: -40px;
+left: 10px;
 }
 
 .footprint {
-    position: absolute;
-    width: 10px;
-    height: 18px;
-    background: var(--brown);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Shoe shape */
-    opacity: 0.6;
-    pointer-events: none;
-    animation: fadeOut 2s forwards;
-    z-index: 9998;
+position: absolute;
+width: 10px;
+height: 18px;
+background: var(--brown);
+border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Shoe shape */
+opacity: 0.6;
+pointer-events: none;
+animation: fadeOut 2s forwards;
+z-index: 9998;
 }
 
 @keyframes fadeOut {
-    0% { opacity: 0.6; }
-    100% { opacity: 0; transform: scale(0.8); }
+0% { opacity: 0.6; }
+100% { opacity: 0; transform: scale(0.8); }
 }
 
 /* Controls */
 .controls {
-    position: fixed;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    z-index: 200;
+position: fixed;
+bottom: 20px;
+width: 100%;
+text-align: center;
+z-index: 200;
 }
 .controls button {
-    font-family: "Satisfy", cursive;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1.2rem;
+font-family: "Satisfy", cursive;
+background: rgba(0,0,0,0.5);
+color: #fff;
+border: 1px solid #fff;
+padding: 10px 20px;
+cursor: pointer;
+font-size: 1.2rem;
 }
