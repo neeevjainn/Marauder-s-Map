@@ -1,5 +1,5 @@
 :root {
-    --garden-green: #1e2b20; /* Deep dark green */
+    --garden-green: #1e2b20;
     --antique-gold: #c5a059;
     --parchment: #f0e6d2;
     --ink: #2b2523;
@@ -15,21 +15,17 @@ body {
     min-height: 100vh;
 }
 
-/* --- LAYER 1: The Garden Background --- */
 .garden-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    /* Javascript sets height */
     z-index: 0;
     background-color: var(--garden-green);
-    /* Subtle leaf/organic texture */
     background-image: url("https://www.transparenttextures.com/patterns/black-scales.png");
     opacity: 0.9;
 }
 
-/* Mist effect over the garden */
 .mist-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -38,14 +34,12 @@ body {
     z-index: 0;
 }
 
-/* The Center Path Column */
 .map-center-column {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
     height: 100%;
-    /* Faint path borders */
     border-left: 1px dashed rgba(197, 160, 89, 0.1);
     border-right: 1px dashed rgba(197, 160, 89, 0.1);
 }
@@ -55,11 +49,10 @@ body {
     position: absolute; top: 0; left: 0;
 }
 
-/* Footprints (Gold/Muddy) */
 .static-footprint {
     position: absolute;
     width: 12px; height: 22px;
-    background: #8b6b3e; /* Muddy Gold */
+    background: #8b6b3e;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity: 0;
     z-index: 1;
@@ -76,7 +69,6 @@ body {
     to { opacity: 0.8; transform: scale(1); }
 }
 
-/* --- LAYER 2: Story Grid --- */
 .story-grid {
     position: relative;
     z-index: 2;
@@ -88,7 +80,6 @@ body {
     padding-bottom: 200px;
 }
 
-/* Header */
 .story-header.full-width {
     grid-column: 1 / -1;
     text-align: center;
@@ -110,7 +101,6 @@ body {
     letter-spacing: 2px;
 }
 
-/* Divider */
 .divider.full-width {
     grid-column: 1 / -1;
     height: 1px;
@@ -120,12 +110,10 @@ body {
     opacity: 0.4;
 }
 
-/* Text Blocks */
 .text-block {
     background: var(--parchment);
     padding: 30px 40px;
     border-radius: 2px;
-    /* Deep shadow to pop off the dark garden bg */
     box-shadow: 0 10px 25px var(--shadow);
     border: 1px solid rgba(0,0,0,0.1);
     
@@ -140,7 +128,6 @@ body {
     margin: 0;
 }
 
-/* Specific Styles for this story */
 .redacted {
     background: #111;
     color: #111;
@@ -154,13 +141,12 @@ body {
 }
 
 .highlight {
-    color: #800000; /* Blood red highlight */
+    color: #800000;
     font-weight: bold;
     font-style: italic;
     background: rgba(255, 255, 0, 0.1);
 }
 
-/* Positioning Logic */
 .text-block:nth-child(odd) {
     grid-column: 1;
     text-align: right;
@@ -173,7 +159,7 @@ body {
     text-align: left;
     border-left: 3px solid var(--antique-gold);
     transform: translateX(30px);
-    margin-top: 100px; /* Stagger */
+    margin-top: 100px;
 }
 
 .text-block.revealed {
@@ -181,7 +167,6 @@ body {
     transform: translateX(0);
 }
 
-/* --- NAVIGATION MENU (Green/Gold Theme) --- */
 .nav-container {
     position: fixed;
     bottom: 60px; right: 870px;
@@ -238,7 +223,6 @@ body {
 .nav-container.active .option:nth-child(3) { transform: translatey(-90px); }
 .nav-container.active .main { transform: rotate(45deg); }
 
-/* Mobile */
 @media (max-width: 768px) {
     .story-grid { display: block; padding: 20px; }
     .text-block:nth-child(odd), .text-block:nth-child(even) {

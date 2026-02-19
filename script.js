@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. INDEX PAGE LOGIC ---
     const enterBtn = document.getElementById('enterBtn');
     if (enterBtn) {
         enterBtn.addEventListener('click', () => {
@@ -15,19 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. HOME PAGE LOGIC ---
     const mapBase = document.querySelector('.map-base');
     if (mapBase) {
         const userName = localStorage.getItem('marauderName') || "Unknown Wizard";
         const cursorName = document.getElementById('cursor-name');
         if (cursorName) cursorName.innerText = userName;
 
-        // Auto Open Map
         setTimeout(() => {
             mapBase.classList.add('active');
         }, 1000);
 
-        // Close Button
         const closeBtn = document.getElementById('closeMapBtn');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => {
@@ -36,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // --- 3. CURSOR & FOOTPRINTS ---
         const follower = document.getElementById('cursor-follower');
         let lastX = 0, lastY = 0, isLeftFoot = true, lastFootprintTime = 0;
 

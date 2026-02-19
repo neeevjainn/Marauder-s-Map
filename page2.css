@@ -14,22 +14,18 @@ body {
     min-height: 100vh;
 }
 
-/* --- LAYER 1: The Ruins Background --- */
 .ruins-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    /* Height set by JS */
     z-index: 0;
     
-    /* A subtle stone texture */
     background-color: #e0d8c8;
     background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
     background-repeat: repeat;
 }
 
-/* The Center Path Column */
 .map-center-column {
     position: absolute;
     left: 50%;
@@ -37,7 +33,6 @@ body {
     width: 300px;
     height: 100%;
     
-    /* Visual Guide: Faint lines representing the temple walls */
     border-left: 1px solid rgba(102, 0, 0, 0.1);
     border-right: 1px solid rgba(102, 0, 0, 0.1);
 }
@@ -49,7 +44,6 @@ body {
     top: 0; left: 0;
 }
 
-/* Footprints (Muddy/Ashy) */
 .static-footprint {
     position: absolute;
     width: 12px;
@@ -72,7 +66,6 @@ body {
     to { opacity: 0.7; transform: scale(1); }
 }
 
-/* --- LAYER 2: Story Grid --- */
 .story-grid {
     position: relative;
     z-index: 2;
@@ -84,7 +77,6 @@ body {
     padding-bottom: 200px;
 }
 
-/* Typography & Headers */
 .story-header.full-width {
     grid-column: 1 / -1;
     text-align: center;
@@ -93,7 +85,7 @@ body {
 
 .story-header h1 {
     font-family: 'Pinyon Script', cursive;
-    font-size: 5rem; /* Large and elegant */
+    font-size: 5rem;
     color: var(--blood-red);
     margin: 0;
     text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
@@ -116,14 +108,13 @@ body {
     opacity: 0.3;
 }
 
-/* Text Blocks */
 .text-block {
     background: var(--paper-bg);
     padding: 30px 40px;
     border: 1px solid rgba(102, 0, 0, 0.1);
     box-shadow: 5px 5px 15px var(--shadow);
     
-    opacity: 0; /* Hidden initially */
+    opacity: 0;
     transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -133,7 +124,6 @@ body {
     margin: 0;
 }
 
-/* Highlight Styles */
 .script-emphasis {
     font-family: 'Pinyon Script', cursive;
     font-size: 1.8rem;
@@ -154,7 +144,6 @@ body {
     border-bottom: 1px solid var(--blood-red);
 }
 
-/* Positioning Logic */
 .text-block:nth-child(odd) {
     grid-column: 1;
     text-align: right;
@@ -167,7 +156,7 @@ body {
     text-align: left;
     border-left: 3px solid var(--blood-red);
     transform: translateX(30px);
-    margin-top: 120px; /* Stagger */
+    margin-top: 120px;
 }
 
 .text-block.revealed {
@@ -175,8 +164,6 @@ body {
     transform: translateX(0);
 }
 
-
-/* --- NAVIGATION MENU (Circular) --- */
 .nav-container {
     position: fixed;
     bottom: 40px;
@@ -198,7 +185,6 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* Main Toggle Button */
 .main {
     background: var(--blood-red);
     color: #fff;
@@ -212,14 +198,13 @@ body {
     background: #4a0000;
 }
 
-/* Satellite Options */
 .nav-options {
     position: absolute;
     bottom: 0;
     right: 0;
     width: 60px;
     height: 60px;
-    pointer-events: none; /* Let clicks pass through when closed */
+    pointer-events: none;
 }
 
 .option {
@@ -255,7 +240,6 @@ body {
     opacity: 1;
 }
 
-/* ACTIVE STATE (Open) */
 .nav-container.active .option {
     opacity: 1;
     pointer-events: auto;
@@ -269,7 +253,6 @@ body {
 background: #444;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .story-grid { display: block; padding: 20px; }
     .text-block:nth-child(odd), .text-block:nth-child(even) {

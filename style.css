@@ -1,4 +1,3 @@
-/* --- VARIABLES --- */
 :root {
     --brown: #4a3b32;
     --paper: #f0e6d2;
@@ -15,7 +14,6 @@ body {
     overflow-x: hidden;
 }
 
-/* --- MAP CONTAINER --- */
 .main-content {
     perspective: 1500px;
     height: 100vh;
@@ -27,14 +25,13 @@ body {
 
 .map-base {
     position: relative;
-    width: 306px; /* Matches the center panel width */
+    width: 306px;
     height: 600px;
     background: url("images/map base.png") center center / cover;
     transform-style: preserve-3d;
     transition: transform 1.5s ease-in-out;
 }
 
-/* --- FLAPS (The "Doors") --- */
 .map-flap {
     position: absolute;
     width: 100%;
@@ -61,14 +58,12 @@ body {
 .flap--2 .map-flap__front { background: url("images/flap 2.png") top left / cover; }
 .flap--2 .map-flap__back { background: url("images/flap 2.png") bottom left / cover; transform: rotateX(180deg); }
 
-/* --- SIDE PANELS (Concertina) --- */
 .map-side {
     position: absolute;
     top: 0;
-    width: 153px; /* Exactly half of map-base */
+    width: 153px;
     height: 100%;
     transform-style: preserve-3d;
-    /* Default transition for closing */
     transition: 0.8s transform ease-in-out;
 }
 
@@ -78,14 +73,12 @@ body {
     height: 100%;
     background-size: cover;
     backface-visibility: hidden;
-    /* Prevents the image from twirling while the parent flips */
     transition: 0s transform; 
 }
 
 .map-side .front { background-image: var(--image); }
 .map-side .back { background-image: url("images/Artbaord.png"); transform: rotateY(180deg); }
 
-/* Initial Stacking and Z-Index (ensures perfect folding order) */
 .side-1, .side-3, .side-5 { left: 0; transform-origin: left; }
 .side-2, .side-4, .side-6 { right: 0; transform-origin: right; }
 
@@ -93,28 +86,21 @@ body {
 .side-3, .side-4 { z-index: 5; }
 .side-5, .side-6 { z-index: 4; }
 
-/* --- ACTIVE / OPEN STATE --- */
-
-/* 1. Open Flaps */
 .map-base.active .flap--1 { transform: rotateX(180deg); }
 .map-base.active .flap--2 { transform: rotateX(-180deg); }
 
-/* 2. Unfold Sides */
-
-/* Inner Panels: Side 1 (Left) & 2 (Right) flip out like covers */
 .map-base.active .side-1 { 
     transform: rotateY(-180deg); 
     transition: 0.8s transform ease-in-out 1s; 
 }
-.map-base.active .side-1 .front { transform: rotateY(180deg); } /* Forces image to face camera */
+.map-base.active .side-1 .front { transform: rotateY(180deg); }
 
 .map-base.active .side-2 { 
     transform: rotateY(180deg); 
     transition: 0.8s transform ease-in-out 1s; 
 }
-.map-base.active .side-2 .front { transform: rotateY(-180deg); } /* Forces image to face camera */
+.map-base.active .side-2 .front { transform: rotateY(-180deg); }
 
-/* Middle Panels: Side 3 (Left) & 4 (Right) slide out */
 .map-base.active .side-3 { 
     transform: translateX(-306px); 
     transition: 0.8s transform ease-in-out 2s; 
@@ -124,7 +110,6 @@ body {
     transition: 0.8s transform ease-in-out 2s; 
 }
 
-/* Outer Panels: Side 5 (Left) & 6 (Right) slide out further */
 .map-base.active .side-5 { 
     transform: translateX(-459px); 
     transition: 0.8s transform ease-in-out 3s; 
@@ -134,7 +119,6 @@ body {
     transition: 0.8s transform ease-in-out 3s; 
 } 
 
-/* --- LINKS --- */
 .map-link {
     position: absolute;
     text-decoration: none;
@@ -146,17 +130,15 @@ body {
     opacity: 0;
     pointer-events: none;
     z-index: 100;
-    transition: opacity 0.5s ease 3.8s; /* Waits for the 3s map animation to finish */
+    transition: opacity 0.5s ease 3.8s;
 }
 
 .map-base.active .map-link { opacity: 1; pointer-events: auto; }
 
-/* Centers the links directly on top of their respective parchment panels */
 .left-link { top: 60%; left: 41%; transform: translateX(-50%); }
 .right-link { top: 58%; left: 64%; transform: translateX(-50%); }
 .center-link { bottom: 380px; left: 48%; transform: translateX(-50%); }
 
-/* --- FOOTPRINTS & CURSOR --- */
 .cursor-follower { position: fixed; pointer-events: none; z-index: 9999; }
 #cursor-name { background: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/scroll.svg') center/cover; padding: 5px 20px; font-family: "Satisfy", cursive; color: var(--brown); }
 .footprint { position: absolute; width: 10px; height: 18px; background: var(--brown); border-radius: 50%; opacity: 0.6; animation: fadeOut 2s forwards; }
@@ -165,23 +147,18 @@ body {
 .controls { position: fixed; bottom: 20px; width: 100%; text-align: center; }
 .controls button { font-family: "Satisfy", cursive; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #fff; padding: 10px 20px; cursor: pointer; }
 
-/* --- MOBILE RESPONSIVENESS --- */
-
-/* For Tablets (iPads, etc.) */
 @media (max-width: 1024px) {
     .map-base {
         transform: scale(0.8);
     }
 }
 
-/* For Smaller Tablets / Large Phones */
 @media (max-width: 768px) {
     .map-base {
         transform: scale(0.6);
     }
 }
 
-/* For Standard Mobile Phones */
 @media (max-width: 480px) {
     .map-base {
         /* Scales the ~918px fully opened map down to ~320px to fit mobile screens */

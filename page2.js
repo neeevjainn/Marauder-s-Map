@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. NAVIGATION MENU TOGGLE ---
     const navContainer = document.querySelector('.nav-container');
     const mainBtn = document.getElementById('main-nav-btn');
 
@@ -8,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
         navContainer.classList.toggle('active');
     });
 
-    // Close menu if clicking outside
     document.addEventListener('click', (e) => {
         if (!navContainer.contains(e.target)) {
             navContainer.classList.remove('active');
         }
     });
 
-    // --- 2. TEXT REVEAL ANIMATION ---
     const textBlocks = document.querySelectorAll('.text-block');
     
     const observer = new IntersectionObserver((entries) => {
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     textBlocks.forEach(block => observer.observe(block));
 
-    // --- 3. PATH & FOOTPRINTS ---
     const body = document.body;
     const html = document.documentElement;
     const path = document.getElementById('walk-path');
@@ -44,8 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = getDocHeight();
         bgLayer.style.height = `${docHeight}px`;
         
-        // Draw a "Winding" path that feels like circles
-        // We create a Sine wave with varying widths
         let d = "M150,0 ";
         const waveHeight = 300;
         const steps = Math.ceil(docHeight / waveHeight);
@@ -54,12 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let yStart = i * waveHeight;
             let yEnd = (i+1) * waveHeight;
             
-            // Alternating broad curves
             if(i % 2 === 0) {
-                // Curve Left
+
                 d += `C 50,${yStart + 150} 50,${yEnd - 100} 150,${yEnd} `;
             } else {
-                // Curve Right
+
                 d += `C 250,${yStart + 150} 250,${yEnd - 100} 150,${yEnd} `;
             }
         }
@@ -68,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(resizeMap, 100);
 
-    // Scroll Logic
     let pathLength = 0;
     let accumulatedDistance = 0;
     let isLeftFoot = true;

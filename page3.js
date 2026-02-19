@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. NAV TOGGLE ---
     const navContainer = document.querySelector('.nav-container');
     const mainBtn = document.getElementById('main-nav-btn');
 
@@ -13,15 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 2. REVEAL ANIMATION ---
-    // We observe both text blocks AND the center page markers
     const revealElements = document.querySelectorAll('.text-block, .page-marker');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('revealed');
-                // If it's a page marker, increase opacity
                 if(entry.target.classList.contains('page-marker')){
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'scale(1.1)';
@@ -32,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => observer.observe(el));
 
-    // --- 3. INFINITE PATH LOGIC ---
     const body = document.body;
     const html = document.documentElement;
     const path = document.getElementById('walk-path');
@@ -48,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = getDocHeight();
         bgLayer.style.height = `${docHeight}px`;
         
-        // A "Shifting" Path: Irregular waves to simulate sand dunes
         let d = "M150,0 ";
         const waveHeight = 200;
         const steps = Math.ceil(docHeight / waveHeight);
@@ -57,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let yStart = i * waveHeight;
             let yEnd = (i+1) * waveHeight;
             
-            // Randomize the "drift" slightly to look organic
             const drift = (i % 2 === 0) ? 120 : 180;
             
             d += `C ${drift},${yStart + 100} ${drift},${yEnd - 50} 150,${yEnd} `;
@@ -67,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(resizeMap, 100);
 
-    // Footprints
     let pathLength = 0;
     let accumulatedDistance = 0;
     let isLeftFoot = true;
@@ -79,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = getDocHeight();
         const windowHeight = window.innerHeight;
 
-        // Footprints appear slightly ahead of scroll center
         const progress = (scrollY + windowHeight * 0.5) / docHeight;
         const currentPathDistance = progress * pathLength;
 

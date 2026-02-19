@@ -14,16 +14,13 @@ body {
     min-height: 100vh;
 }
 
-/* --- LAYER 1: The Infinite Sand Background --- */
 .sand-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    /* Javascript sets height */
     z-index: 0;
     background-color: #1a1a1a;
-    /* Subtle paper/sand texture */
     background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
 }
 
@@ -35,14 +32,12 @@ body {
     pointer-events: none;
 }
 
-/* The Center Path Column */
 .map-center-column {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     width: 300px;
     height: 100%;
-    /* Faint borders to represent the infinite book spine */
     border-left: 1px dashed rgba(194, 178, 128, 0.2);
     border-right: 1px dashed rgba(194, 178, 128, 0.2);
 }
@@ -52,11 +47,10 @@ body {
     position: absolute; top: 0; left: 0;
 }
 
-/* Sand Footprints */
 .static-footprint {
     position: absolute;
     width: 12px; height: 22px;
-    background: var(--sand-gold); /* Gold footprints on dark bg */
+    background: var(--sand-gold);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity: 0;
     z-index: 1;
@@ -74,7 +68,6 @@ body {
     to { opacity: 0.6; transform: scale(1); }
 }
 
-/* --- LAYER 2: Story Grid --- */
 .story-grid {
     position: relative;
     z-index: 2;
@@ -86,7 +79,6 @@ body {
     padding-bottom: 200px;
 }
 
-/* Header */
 .story-header.full-width {
     grid-column: 1 / -1;
     text-align: center;
@@ -107,9 +99,8 @@ body {
     letter-spacing: 2px;
 }
 
-/* Page Markers (The numbers in the middle) */
 .page-marker {
-    grid-column: 2; /* Sits in center path */
+    grid-column: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,7 +119,6 @@ body {
     background: #111;
 }
 
-/* Text Blocks */
 .text-block {
     background: var(--paper-white);
     padding: 30px 40px;
@@ -141,7 +131,6 @@ body {
     position: relative;
 }
 
-/* Infinite Paper Stack Effect */
 .text-block::after {
     content: ""; position: absolute;
     bottom: -5px; left: 5px; right: 5px; height: 100%;
@@ -158,10 +147,9 @@ body {
 .sand-text {
     font-family: 'Pinyon Script', cursive;
     font-size: 1.6rem;
-    color: #8B4513; /* SaddleBrown for emphasis */
+    color: #8B4513;
 }
 
-/* Positioning Logic */
 .text-block:nth-of-type(odd) {
     grid-column: 1;
     transform: translateX(-30px);
@@ -178,7 +166,6 @@ body {
     transform: translateX(0);
 }
 
-/* --- NAVIGATION MENU (Gold Theme) --- */
 .nav-container {
     position: fixed;
     bottom: 40px; right: 870px;
@@ -236,7 +223,6 @@ body {
 background: #444;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .story-grid { display: block; padding: 20px; }
     .text-block:nth-of-type(odd), .text-block:nth-of-type(even) {

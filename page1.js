@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. NAV TOGGLE ---
     const navContainer = document.querySelector('.nav-container');
     const mainBtn = document.getElementById('main-nav-btn');
 
@@ -13,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 2. REVEAL ANIMATION ---
     const textBlocks = document.querySelectorAll('.text-block');
     
     const observer = new IntersectionObserver((entries) => {
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     textBlocks.forEach(block => observer.observe(block));
 
-    // --- 3. FORKING PATHS LOGIC ---
     const body = document.body;
     const html = document.documentElement;
     const path = document.getElementById('walk-path');
@@ -42,8 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = getDocHeight();
         bgLayer.style.height = `${docHeight}px`;
         
-        // A "Forking" Path Logic: A complex Sine wave that looks like it's winding
-        // through a garden, occasionally turning sharply
         let d = "M150,0 ";
         const waveHeight = 250;
         const steps = Math.ceil(docHeight / waveHeight);
@@ -52,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let yStart = i * waveHeight;
             let yEnd = (i+1) * waveHeight;
             
-            // Randomize curve direction to feel organic
             const curve = (i % 3 === 0) ? 50 : (i % 3 === 1) ? 250 : 150;
             
             d += `C ${curve},${yStart + 100} ${curve},${yEnd - 50} 150,${yEnd} `;
@@ -60,10 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
         path.setAttribute('d', d);
     }
 
-    // Initialize
     setTimeout(resizeMap, 100);
 
-    // Footprints
     let pathLength = 0;
     let accumulatedDistance = 0;
     let isLeftFoot = true;
@@ -75,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const docHeight = getDocHeight();
         const windowHeight = window.innerHeight;
 
-        // Progress based calculation
         const progress = (scrollY + windowHeight * 0.5) / docHeight;
         const currentPathDistance = progress * pathLength;
 
