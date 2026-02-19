@@ -164,3 +164,43 @@ body {
 
 .controls { position: fixed; bottom: 20px; width: 100%; text-align: center; }
 .controls button { font-family: "Satisfy", cursive; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #fff; padding: 10px 20px; cursor: pointer; }
+
+/* --- MOBILE RESPONSIVENESS --- */
+
+/* For Tablets (iPads, etc.) */
+@media (max-width: 1024px) {
+    .map-base {
+        transform: scale(0.8);
+    }
+}
+
+/* For Smaller Tablets / Large Phones */
+@media (max-width: 768px) {
+    .map-base {
+        transform: scale(0.6);
+    }
+}
+
+/* For Standard Mobile Phones */
+@media (max-width: 480px) {
+    .map-base {
+        /* Scales the ~918px fully opened map down to ~320px to fit mobile screens */
+        transform: scale(0.35); 
+    }
+    
+    /* Make the links a bit larger on mobile so they are easier to tap */
+    .map-link {
+        font-size: 1.5rem;
+        padding: 15px;
+    }
+    .map-link small {
+        font-size: 1.1rem;
+    }
+}
+/* Hide custom cursor and footprints on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-follower, 
+    .footprint {
+        display: none !important;
+    }
+}
