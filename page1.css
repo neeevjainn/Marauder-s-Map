@@ -184,7 +184,7 @@ body {
 /* --- NAVIGATION MENU (Green/Gold Theme) --- */
 .nav-container {
     position: fixed;
-    bottom: 40px; right: 40px;
+    bottom: 60px; right: 870px;
     z-index: 100;
 }
 
@@ -224,7 +224,7 @@ body {
 }
 
 .tooltip {
-    position: absolute; right: 70px;
+    position: absolute; top: -30px right: 0px;
     background: var(--antique-gold); color: #000;
     padding: 4px 8px; font-size: 0.8rem;
     border-radius: 2px; font-family: sans-serif;
@@ -233,9 +233,9 @@ body {
 .option:hover .tooltip { opacity: 1; }
 
 .nav-container.active .option { opacity: 1; pointer-events: auto; }
-.nav-container.active .option:nth-child(1) { transform: translateY(-80px); }
+.nav-container.active .option:nth-child(1) { transform: translate(60px, -60px); }
 .nav-container.active .option:nth-child(2) { transform: translate(-60px, -60px); }
-.nav-container.active .option:nth-child(3) { transform: translateX(-80px); }
+.nav-container.active .option:nth-child(3) { transform: translatey(-90px); }
 .nav-container.active .main { transform: rotate(45deg); }
 
 /* Mobile */

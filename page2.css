@@ -180,7 +180,7 @@ body {
 .nav-container {
     position: fixed;
     bottom: 40px;
-    right: 40px;
+    right: 870px;
     z-index: 100;
 }
 
@@ -237,10 +237,9 @@ body {
     pointer-events: none;
 }
 
-/* Tooltip text */
 .tooltip {
     position: absolute;
-    right: 70px;
+    top: -30px;
     background: #333;
     color: #fff;
     padding: 4px 8px;
@@ -262,15 +261,12 @@ body {
     pointer-events: auto;
 }
 
-/* Fan out calculation */
-.nav-container.active .option:nth-child(1) { transform: translateY(-80px); }
+.nav-container.active .option { opacity: 1; pointer-events: auto; }
+.nav-container.active .option:nth-child(1) { transform: translate(60px, -60px); }
 .nav-container.active .option:nth-child(2) { transform: translate(-60px, -60px); }
-.nav-container.active .option:nth-child(3) { transform: translateX(-80px); }
-
-/* Rotate the main button when open */
-.nav-container.active .main {
-    transform: rotate(45deg);
-    background: #444;
+.nav-container.active .option:nth-child(3) { transform: translatey(-90px); }
+.nav-container.active .main { transform: rotate(45deg);
+background: #444;
 }
 
 /* Mobile */

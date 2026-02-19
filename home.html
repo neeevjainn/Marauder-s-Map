@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Map</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Satisfy&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Favicon.png">
 </head>
 <body class="map-body">
 
 <div id="cursor-follower" class="cursor-follower">
-<span id="cursor-name"></span>
+    <span id="cursor-name"></span>
 </div>
 
 <div class="main-content">
-<div class="map-base">
-<div class="map-flap flap--1">
-<div class="map-flap__front"></div>
-<div class="map-flap__back"></div>
-</div>
-<div class="map-flap flap--2">
-<div class="map-flap__front"></div>
-<div class="map-flap__back"></div>
-</div>
+    <div class="map-base">
+        <div class="map-flap flap--1">
+            <div class="map-flap__front"></div>
+            <div class="map-flap__back"></div>
+        </div>
+        <div class="map-flap flap--2">
+            <div class="map-flap__front"></div>
+            <div class="map-flap__back"></div>
+        </div>
 
-<div class="map-side side-1">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/8.png')"></div>
-<div class="back"></div>
-</div>
-<div class="map-side side-2">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/18.png')"></div>
-<div class="back"></div>
-</div>
-<div class="map-side side-3">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/7.png')"></div>
-<div class="back"></div>
-<a href="page1.html" class="map-link left-link">
-<span>Page 1</span>
-<small>The Archives</small>
-</a>
-</div>
-<div class="map-side side-4">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/10.png')"></div>
-<a href="page3.html" class="map-link right-link">
-<span>Page 3</span>
-<small>Secrets</small>
-</a>
-</div>
-<div class="map-side side-5">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/6.png')"></div>
-<div class="back"></div>
-</div>
-<div class="map-side side-6">
-<div class="front" style="--image: url('https://meowlivia.s3.us-east-2.amazonaws.com/codepen/map/11.png')"></div>
-<div class="back"></div>
-</div>
-<a href="page2.html" class="map-link center-link">
-<span>Page 2</span>
-<small>The Dungeons</small>
-</a>
+        <div class="map-side side-1">
+            <div class="front" style="--image: url('images/side 5.png')"></div>
+            <div class="back"></div>
+        </div>
+        <div class="map-side side-2">
+            <div class="front" style="--image: url('images/side 2.png')"></div>
+            <div class="back"></div>
+        </div>
+        <div class="map-side side-3">
+            <div class="front" style="--image: url('images/side 3.png')"></div>
+            <div class="back"></div>
+            <a href="page1.html" class="map-link left-link">
+                <small>The Garden</small>
+            </a>
+        </div>
+        <div class="map-side side-4">
+            <div class="front" style="--image: url('images/side 4.png')"></div>
+            <div class="back"></div>
+            <a href="page3.html" class="map-link right-link">
+                <small>The Sand</small>
+            </a>
+        </div>
+        <div class="map-side side-5">
+            <div class="front" style="--image: url('images/side 1.png')"></div>
+            <div class="back"></div>
+        </div>
+        <div class="map-side side-6">
+            <div class="front" style="--image: url('images/side 6.png')"></div>
+            <div class="back"></div>
+        </div>
 
-</div>
+        <a href="page2.html" class="map-link center-link">
+            <small>The Ruins</small>
+        </a>
+    </div>
 </div>
 
 <div class="controls">
-<button id="closeMapBtn">Mischief Managed</button>
+    <button id="closeMapBtn">Close the Dungeons</button>
 </div>
 
 <script src="script.js"></script>
